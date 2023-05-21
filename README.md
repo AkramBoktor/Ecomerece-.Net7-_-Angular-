@@ -1,8 +1,8 @@
 # Ecomerece( .Net7 and Angular )
 
-#Section 2
+# Section 2
  
-* Creating the web API Project 
+**Creating the web API Project**
 . To make new folder 
  - makdir ....
 . To know the .Net Version you can click in command line
@@ -33,9 +33,9 @@ After that you need to run : dotnet ef database  update
 
 -----------------------------------------------------------------------------
 
-#Section 3
+# Section 3
 
-The repository pattern :
+# The repository pattern :
 1- Decouple business code from data access
 2- Separation of concerns
 3- Minimise duplicate query logic
