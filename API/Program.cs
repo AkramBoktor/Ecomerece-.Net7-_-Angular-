@@ -31,4 +31,18 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+// Migrate Database
+using var scope = app.Services.CreateScope();
+var services = scope.ServiceProvider;
+var context = services.GetRequiredService<StoreContext>();
+var logger = services.GetRequiredService<ILogger<Program>>();
+try
+{
+
+    await context.Database.MigrateAsync();
+}
+catch (Exception ex)
+{
+    logger.LogError(ex, "An error Occurred Failing retrieve the data");
+}
 app.Run();
