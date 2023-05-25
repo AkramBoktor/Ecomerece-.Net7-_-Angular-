@@ -41,4 +41,42 @@ The repository pattern :
 5- Increase level of abstraction
 6- Increased Maitainability , Flexiblity , Testability
 
+. Drop database migrations
+- dotnet ef database drop -p Infrastructure -s API
+. To Delete the folder
+- dotnet ef migrations remove -p Infrastructure -s API
+
+. To Create new Migration you should do
+- dotnet ef migrations add InitialCreate -p Infrastructure -s API -o Data/Migrations -> Infrastructure refer to the project API -> refer to the start up project
+
+. Addidng seed data in your solutions
+
+ public class StoreContextSeed
+    {
+        public static async Task SeedAsync(StoreContext context)
+        {
+            //check if have seed data or not if not add some
+            if (!context.ProductBrands.Any())
+            {
+                var brandsData = File.ReadAllText("../Infrastructure/SeedData/brands.json");
+                var brands = JsonSerializer.Deserialize<List<ProductBrand>>(brandsData);
+                context.ProductBrands.AddRange(brands);
+            }
+
+            if (!context.ProductTypes.Any())
+            {
+                var typesData = File.ReadAllText("../Infrastructure/SeedData/types.json");
+                var types = JsonSerializer.Deserialize<List<ProductType>>(typesData);
+                context.ProductTypes.AddRange(types);
+            }
+
+            if (!context.Products.Any())
+            {
+                var ProductsData = File.ReadAllText("../Infrastructure/SeedData/products.json");
+                var products = JsonSerializer.Deserialize<List<Products>>(ProductsData);
+                context.Products.AddRange(products);
+            }
+        }
+    }
+
 
