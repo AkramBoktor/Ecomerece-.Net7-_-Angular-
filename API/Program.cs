@@ -2,6 +2,7 @@ using Core.Data;
 using Microsoft.EntityFrameworkCore;
 using Core.Interfaces;
 using Infrastructure.Repository;
+using Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,6 +41,7 @@ try
 {
 
     await context.Database.MigrateAsync();
+    await StoreContextSeed.SeedAsync(context);
 }
 catch (Exception ex)
 {
