@@ -1,0 +1,20 @@
+using Core.Data;
+using Core.Entities;
+using System.Text.Json;
+
+namespace Infrastructure.Data
+{
+    public class StoreContextSeed
+    {
+        public static async Task SeedAsync(StoreContext context)
+        {
+            //check if have seed data or not if not add some
+            if (!context.ProductBrands.Any())
+            {
+                var brandsData = File.ReadAllText("../Infrastructure/SeedData/brands.json");
+                var brands = JsonSerializer.Deserialize<List<ProductBrand>>(brandsData);
+                context.ProductBrands.AddRange(brands);
+            }
+        }
+    }
+}
