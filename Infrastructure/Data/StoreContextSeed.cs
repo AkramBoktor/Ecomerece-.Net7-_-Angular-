@@ -26,7 +26,7 @@ namespace Infrastructure.Data
             if (!context.Products.Any())
             {
                 var ProductsData = File.ReadAllText("../Infrastructure/SeedData/products.json");
-                var products = JsonSerializer.Deserialize<List<ProductType>>(ProductsData);
+                var products = JsonSerializer.Deserialize<List<Products>>(ProductsData);
                 context.Products.AddRange(products);
             }
         }
