@@ -18,12 +18,20 @@ namespace Infrastructure.Repository
 
         public async Task<Products> GetProductByIdAsync(int id)
         {
-            return await _context.Products.FindAsync(id);
+#pragma warning disable CS8603 // Possible null reference return.
+            return await _context.Products
+                         .Include(p => p.ProductType)
+                         .Include(p => p.ProductBrand)
+                         .FirstOrDefaultAsync(p => p.Id == id);
+#pragma warning restore CS8603 // Possible null reference return.
         }
 
         public async Task<IReadOnlyList<Products>> GetProductsAsync()
         {
-            return await _context.Products.ToListAsync();
+            return await _context.Products
+                        .Include(p=>p.ProductType)
+                        .Include(p=>p.ProductBrand)
+                        .ToListAsync();
         }
 
         public async Task<IReadOnlyList<ProductType>> GetProductTypeAsync()
