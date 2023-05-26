@@ -79,4 +79,12 @@ The repository pattern :
         }
     }
 
+-------------------------------------------------------------------
+Section 4
+. Generic Repository
+  public interface IGenericRepository<T> where T : BaseEntity 
+    {
+        Task<T> GetByIdAsync(int id);
+        Task<IReadOnlyList<T>> LIstAllAsync();
 
+    }
