@@ -88,3 +88,34 @@ Section 4
         Task<IReadOnlyList<T>> LIstAllAsync();
 
     }
+
+. Specific Pattern to rescue
+ - Describe a query in an object
+ - Returns an IQuerable<T>
+ - Generic List Method takes a specification as parameter
+
+. Make an interface for specification 
+  public interface ISpecification<T>
+    {
+       Expression<Func<T,bool>> Criteria {get;} 
+       
+       List<Expression<Func<T, object>>> Include{get;}   
+    }
+. Implement this interface
+    public class BaseSpecification<T> : ISpecification<T>
+    {
+        public BaseSpecification(Expression<Func<T, bool>> criteria)
+        {
+            Criteria = criteria;
+        }
+
+        public Expression<Func<T, bool>> Criteria { get; }
+
+        public List<Expression<Func<T, object>>> Includes { get; } = 
+               new List<Expression<Func<T, object>>>();
+
+        protected void AddInclude(Expression<Func<T, object>> includeExpression)
+        {
+            Includes.Add(includeExpression);
+        }
+    }

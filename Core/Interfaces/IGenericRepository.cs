@@ -1,4 +1,5 @@
 ﻿using Core.Entities;
+using Core.Specification;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,8 @@ namespace Core.Interfaces
     {
         Task<T> GetByIdAsync(int id);
         Task<IReadOnlyList<T>> ListAllAsync();
+        Task<T> GetEntityWithSpec(ISpecification<T> specification);
+        Task<IReadOnlyList<T>> ListAsyncSpec(ISpecification<T> specification);
 
     }
 }
