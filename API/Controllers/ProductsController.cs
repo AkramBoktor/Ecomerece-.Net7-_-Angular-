@@ -1,9 +1,10 @@
-using Core.Data;
+ using Core.Data;
 using Core.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Core.Interfaces;
+using Core.Specification;
 
 namespace API.Controllers
 {
@@ -27,7 +28,8 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<IReadOnlyList<Products>>> GetProducts()
         {
-            return Ok(await _productRepo.ListAllAsync());
+            var spec = new ProductsWithTypesAndBrandsSpecification();
+            return Ok(await _productRepo.ListAsyncSpec(spec));
         }
 
         [HttpGet("{id}")]
