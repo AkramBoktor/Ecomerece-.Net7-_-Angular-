@@ -5,6 +5,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Core.Interfaces;
 using Core.Specification;
+using API.Dtos;
 
 namespace API.Controllers
 {
@@ -29,15 +30,37 @@ namespace API.Controllers
         public async Task<ActionResult<IReadOnlyList<Products>>> GetProducts()
         {
             var spec = new ProductsWithTypesAndBrandsSpecification();
-            return Ok(await _productRepo.ListAsyncSpec(spec));
+
+          var productList = await _productRepo.ListAsyncSpec(spec);
+            return Ok(productList.Select(productList => new ProductToReturnDto
+            {
+                Id = productList.Id,
+                Description = productList.Description,
+                Name = productList.Name,
+                PictureUrl = productList.PictureUrl,
+                Price = productList.Price,
+                ProductBrand = productList.ProductBrand.Name,
+                ProductType = productList.ProductType.Name
+            }));
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Products>> GetProduct(int id)
+        public async Task<ActionResult<ProductToReturnDto>> GetProduct(int id)
         {
             var spec = new ProductsWithTypesAndBrandsSpecification(id);
 
-            return Ok(await _productRepo.GetEntityWithSpec(spec));
+            var product = (await _productRepo.GetEntityWithSpec(spec));
+
+            return Ok(new ProductToReturnDto
+            {
+                Id = product.Id,
+                Description = product.Description,
+                Name = product.Name,
+                PictureUrl = product.PictureUrl,
+                Price = product.Price,
+                ProductBrand = product.ProductBrand.Name,
+                ProductType = product.ProductType.Name
+            });
         }
 
         [HttpGet("brands")]
