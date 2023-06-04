@@ -136,4 +136,5 @@ Section 4
         }
     }
 
-.
+. DTO ( Data Transfer Object it's used for transfer data between layers ) 
+- For view data for the client with a good shape 
