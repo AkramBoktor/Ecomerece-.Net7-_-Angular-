@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Core.Interfaces;
 using Core.Specification;
 using API.Dtos;
+using AutoMapper;
 
 namespace API.Controllers
 {
@@ -16,14 +17,17 @@ namespace API.Controllers
         private readonly IGenericRepository<Products> _productRepo;
         private readonly IGenericRepository<ProductBrand> _productBandRepo;
         private readonly IGenericRepository<ProductType> _productTyperepo;
+        private readonly IMapper _mapper;
 
         public ProductsController(IGenericRepository<Products> productRepo , 
                                   IGenericRepository<ProductBrand> productBandRepo ,
-                                  IGenericRepository<ProductType> productTyperepo)
+                                  IGenericRepository<ProductType> productTyperepo ,
+                                  IMapper mapper)
         {
             _productRepo = productRepo;
             _productBandRepo = productBandRepo;
             _productTyperepo = productTyperepo;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -51,16 +55,7 @@ namespace API.Controllers
 
             var product = (await _productRepo.GetEntityWithSpec(spec));
 
-            return Ok(new ProductToReturnDto
-            {
-                Id = product.Id,
-                Description = product.Description,
-                Name = product.Name,
-                PictureUrl = product.PictureUrl,
-                Price = product.Price,
-                ProductBrand = product.ProductBrand.Name,
-                ProductType = product.ProductType.Name
-            });
+            return Ok(_mapper.Map<Products, ProductToReturnDto>(product));
         }
 
         [HttpGet("brands")]
