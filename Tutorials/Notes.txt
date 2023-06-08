@@ -137,4 +137,30 @@ Section 4
     }
 
 . DTO ( Data Transfer Object it's used for transfer data between layers ) 
-- For view data for the client with a good shape 
+- For view data for the client with a good shap
+
+. AutoMapper Add 
+  - install auto mapeer extension.dependency injection
+- Create3 new class 
+   public class MappingProfile : Profile
+    {
+        public MappingProfile()
+        {
+            CreateMap<Products, ProductToReturnDto>();
+        }
+    }
+
+  - Add automapper in program.cs
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+ - Inject AutoMapper to the controller 
+Using auto mapper 
+            return Ok(_mapper.Map<Products, ProductToReturnDto>(product));
+ - For mapping an object you need to custom it on mapping profile
+      public MappingProfile()
+        {
+            CreateMap<Products, ProductToReturnDto>()
+                .ForMember(d => d.ProductBrand, o => o.MapFrom(s => s.ProductBrand.Name))
+                .ForMember(d => d.ProductType, o => o.MapFrom(s => s.ProductType.Name));
+        }
+ 
