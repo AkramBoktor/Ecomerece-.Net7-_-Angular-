@@ -164,3 +164,13 @@ Using auto mapper
                 .ForMember(d => d.ProductType, o => o.MapFrom(s => s.ProductType.Name));
         }
  
+----------------------------------------------------------------------
+
+Section 5 API Error Handling
+ . 200 ok   300 range redirection  400 range error handling  500 range error handling 
+ - Create Class ApiResponse
+   public class ApiResponse
+    {
+        public int StatusCode { get; set; }
+        public string Message { get; set; }
+    }
