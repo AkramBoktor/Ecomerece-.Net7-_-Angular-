@@ -1,12 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using API.Errors;
+using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    public class ErrorController : Controller
+    [Route("errors/{code}")]
+    public class ErrorController : BaseApiController
     {
-        public IActionResult Index()
+        public IActionResult Error(int code)
         {
-            return View();
+            return new ObjectResult(new ApiResponse(code));
         }
     }
 }
