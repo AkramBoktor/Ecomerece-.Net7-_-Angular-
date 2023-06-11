@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Core.Interfaces;
 using Infrastructure.Repository;
 using Infrastructure.Data;
-using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using API.Errors;
 using API.Middleware;
@@ -46,6 +45,8 @@ app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseStatusCodePagesWithReExecute("/errors/{0}");
 
+// Make swagger in development 
+// If you remove it it will be in production
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
