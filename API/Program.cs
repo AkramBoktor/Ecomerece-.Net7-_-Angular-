@@ -1,14 +1,13 @@
 using Core.Data;
 using Microsoft.EntityFrameworkCore;
-using Core.Interfaces;
-using Infrastructure.Repository;
 using Infrastructure.Data;
-using Microsoft.AspNetCore.Mvc;
-using API.Errors;
 using API.Middleware;
+using API.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//Extension Class Add service
+builder.Services.AddApplicationservices(builder.Configuration);
 
 var app = builder.Build();
 

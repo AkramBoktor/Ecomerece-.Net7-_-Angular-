@@ -4,7 +4,7 @@ using Core.Interfaces;
 using Infrastructure.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
+ 
 namespace API.Extensions
 {
     public static class ApplicationservicesExtensions
