@@ -174,3 +174,20 @@ Section 5 API Error Handling
         public int StatusCode { get; set; }
         public string Message { get; set; }
     }
+
+. Improve swagger document in the product controller 
+will provide two response type in swagger
+
+        [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<ProductToReturnDto>> GetProduct(int id)
+        {
+            var spec = new ProductsWithTypesAndBrandsSpecification(id);
+
+            var product = (await _productRepo.GetEntityWithSpec(spec));
+
+           if(product == null) return NotFound(new ApiResponse(404));
+
+            return Ok(_mapper.Map<Products, ProductToReturnDto>(product));
+        }
