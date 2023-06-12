@@ -1,8 +1,5 @@
- using Core.Data;
 using Core.Entities;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
 using Core.Interfaces;
 using Core.Specification;
 using API.Dtos;
