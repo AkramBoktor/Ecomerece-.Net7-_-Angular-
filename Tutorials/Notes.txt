@@ -191,3 +191,11 @@ will provide two response type in swagger
 
             return Ok(_mapper.Map<Products, ProductToReturnDto>(product));
         }
+
+-------------------------------------------------------
+
+Section 5 ( Pagination - filter - Sorting - Searching ) 
+. Pagination : 
+-   will be like query string : /api/products?pageNumber=2&pageSize=5
+-   page size should be limited 
+-   We should always oage results
