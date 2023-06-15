@@ -30,7 +30,7 @@ namespace API.Controllers
 
         [HttpGet]
         public async Task<ActionResult<IReadOnlyList<Products>>> GetProducts(
-            ProductSpecParams productParams)
+          [FromQuery] ProductSpecParams productParams)
         {
             var spec = new ProductsWithTypesAndBrandsSpecification(productParams);
 
