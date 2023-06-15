@@ -13,7 +13,11 @@ namespace Infrastructure.Data
             {
                 query = query.Where(spec.Criteria); //could p=>p.ProductTypeId == id
             }
-
+            // Should make paginaging after making the filter so the order is important
+            if (spec.IsPagingEnabled)
+            {
+                query = query.Skip(spec.Skip).Take(spec.Take);
+            }
             if (spec.OrderBy != null)
             {
                 query = query.OrderBy(spec.OrderBy); 
