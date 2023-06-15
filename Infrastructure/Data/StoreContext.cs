@@ -19,6 +19,20 @@ namespace Core.Data
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+            // for error decimal problem in sqlite
+            if (Database.ProviderName == "Microsoft.EntityFrameworkCore.Sqlite")
+            {
+                foreach (var entity in modelBuilder.Model.GetEntityTypes())
+                {
+                    var properties = entity.ClrType.GetProperties().Where(p=>p.PropertyType == typeof(decimal));
+
+                    foreach (var property in properties)
+                    {
+                        modelBuilder.Entity(entity.Name).Property(property.Name).HasConversion<double>();
+                    }
+                }
+            }
         }
 
     }
