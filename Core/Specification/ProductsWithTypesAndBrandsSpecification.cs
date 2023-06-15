@@ -1,14 +1,13 @@
 ﻿using Core.Entities;
-using System.Linq.Expressions;
 
 namespace Core.Specification
 {
     public class ProductsWithTypesAndBrandsSpecification : BaseSpecification<Products>
     {
-        public ProductsWithTypesAndBrandsSpecification(string sort, int? brandId, int? typeId) : 
+        public ProductsWithTypesAndBrandsSpecification(ProductSpecParams productParams) : 
             base( x=>
-               (!brandId.HasValue || x.ProductBrandId == brandId) &&
-               (!typeId.HasValue || x.ProductTypeId == typeId)   
+               (!productParams.BrandId.HasValue || x.ProductBrandId == productParams.BrandId) &&
+               (!productParams.BrandId.HasValue || x.ProductTypeId == productParams.TypeId)   
             )
         {
             AddInclude(x => x.ProductType);
@@ -17,9 +16,9 @@ namespace Core.Specification
 
             AddOrderBy(x => x.Name);
 
-            if (!string.IsNullOrEmpty(sort))
+            if (!string.IsNullOrEmpty(productParams.Sort))
             {
-                switch(sort)
+                switch(productParams.Sort)
                 {
                     case "priceAsc":
                         AddOrderBy(p=>p.Price);
