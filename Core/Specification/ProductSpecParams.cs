@@ -8,6 +8,8 @@ namespace Core.Specification
 
         private int _PageSize { get; set; } = 6;
 
+        private string _search { get; set; }
+
         public int PageSize {
             get => _PageSize;
             set => _PageSize = (value > MaxPageSize) ? MaxPageSize : value;
@@ -18,5 +20,7 @@ namespace Core.Specification
         public int? TypeId { get; set; }
 
         public string Sort { get; set; }
+
+        public string Search { get => _search; set => _search = value.ToLower(); }
     }
 }
