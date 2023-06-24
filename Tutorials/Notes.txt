@@ -201,3 +201,15 @@ Section 5 ( Pagination - filter - Sorting - Searching )
 -   We should always oage results
 
 
+
+----------------------------------------------------------------
+
+Section 7 Front end 
+To install certificate in your computer to make the client like https 
+. mkcert -install
+to  install certificated 
+1 - open the path and press Alt , Shift , F , A
+and then run as adminstration
+2 - mkcert -install
+3 - mkcert localhost
+important Link : https://technixleo.com/create-locally-trusted-ssl-certificates-with-mkcert-on-windows/
