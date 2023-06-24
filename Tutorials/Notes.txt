@@ -213,3 +213,22 @@ and then run as adminstration
 2 - mkcert -install
 3 - mkcert localhost
 important Link : https://technixleo.com/create-locally-trusted-ssl-certificates-with-mkcert-on-windows/
+      "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options":{
+            "sslCert":"ssl/localhost.pem",
+            "sslKey":"ssl/localhost-key.pem",
+            "ssl":true
+          },
+
+. To add boostrap 
+1 - in the client folder of your project write this command 
+ ng add ngx-bootstrap
+https://valor-software.com/ngx-bootstrap/#/documentation
+
+For unistall angular CLi
+
+**npm uninstall -g @angular/cli
+**npm cache clean --force
+**npm install -g @angular/cli@1.4.1
+**npx -p @angular/cli@15.0.2 ng new Client
