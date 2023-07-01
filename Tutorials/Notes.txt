@@ -236,6 +236,8 @@ For unistall angular CLi
 
 -------------------------------------------------------------
 
-Section 8
+Section 8 Angular basics
 . To Generate Component you should run 
  - ng g c nav-bar --dry-run
+. To skip test file
+  -ng g c nav-bar --skip-tests
