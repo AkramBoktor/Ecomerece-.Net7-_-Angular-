@@ -244,3 +244,25 @@ Section 8 Angular basics
  - ng g c nav-bar --dry-run
 . To skip test file
  - ng g c nav-bar --skip-tests
+
+. Angular life cycle hooks
+ - oninit
+ -
+  ngOnInit(): void {
+     this.http.get('https://localhost:5001/api/products').subscribe({
+       next: (response:any)=> this.products = response.data, //what to do next
+       error: (error:any) => console.log(error), // what to do when ther is an error
+       complete:()=>{
+         console.log('requested Completed');
+       }
+     });
+  }
+
+Structure Directive 
+ <li class="list-unstyled" *ngfor="let product of products">
+       {{product.name}}
+    </li>
+
+Observable : A sequence of items that arrive asynchronously over time
+- important link json2ts https://json2ts.vercel.app/
+
