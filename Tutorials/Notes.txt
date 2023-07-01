@@ -213,6 +213,9 @@ and then run as adminstration
 2 - mkcert -install
 3 - mkcert localhost
 important Link : https://technixleo.com/create-locally-trusted-ssl-certificates-with-mkcert-on-windows/
+
+add these lines to ts config
+
       "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options":{
@@ -240,4 +243,4 @@ Section 8 Angular basics
 . To Generate Component you should run 
  - ng g c nav-bar --dry-run
 . To skip test file
-  -ng g c nav-bar --skip-tests
+ - ng g c nav-bar --skip-tests
