@@ -33,9 +33,12 @@ After that you need to run : dotnet ef database  update
 
 -----------------------------------------------------------------------------
 
+
+-----------------------------------------------------------------------------
+
 # Section 3
 
-# The repository pattern :
+The repository pattern :
 1- Decouple business code from data access
 2- Separation of concerns
 3- Minimise duplicate query logic
@@ -43,4 +46,225 @@ After that you need to run : dotnet ef database  update
 5- Increase level of abstraction
 6- Increased Maitainability , Flexiblity , Testability
 
+. Drop database migrations
+- dotnet ef database drop -p Infrastructure -s API
+. To Delete the folder
+- dotnet ef migrations remove -p Infrastructure -s API
 
+. To Create new Migration you should do
+- dotnet ef migrations add InitialCreate -p Infrastructure -s API -o Data/Migrations -> Infrastructure refer to the project API -> refer to the start up project
+
+. Addidng seed data in your solutions
+
+ public class StoreContextSeed
+    {
+        public static async Task SeedAsync(StoreContext context)
+        {
+            //check if have seed data or not if not add some
+            if (!context.ProductBrands.Any())
+            {
+                var brandsData = File.ReadAllText("../Infrastructure/SeedData/brands.json");
+                var brands = JsonSerializer.Deserialize<List<ProductBrand>>(brandsData);
+                context.ProductBrands.AddRange(brands);
+            }
+
+            if (!context.ProductTypes.Any())
+            {
+                var typesData = File.ReadAllText("../Infrastructure/SeedData/types.json");
+                var types = JsonSerializer.Deserialize<List<ProductType>>(typesData);
+                context.ProductTypes.AddRange(types);
+            }
+
+            if (!context.Products.Any())
+            {
+                var ProductsData = File.ReadAllText("../Infrastructure/SeedData/products.json");
+                var products = JsonSerializer.Deserialize<List<Products>>(ProductsData);
+                context.Products.AddRange(products);
+            }
+        }
+    }
+
+-------------------------------------------------------------------
+# Section 4
+. Generic Repository
+  public interface IGenericRepository<T> where T : BaseEntity 
+    {
+        Task<T> GetByIdAsync(int id);
+        Task<IReadOnlyList<T>> LIstAllAsync();
+
+    }
+
+. Specific Pattern to rescue
+ - Describe a query in an object
+ - Returns an IQuerable<T>
+ - Generic List Method takes a specification as parameter
+
+. Make an interface for specification 
+  public interface ISpecification<T>
+    {
+       Expression<Func<T,bool>> Criteria {get;} 
+       
+       List<Expression<Func<T, object>>> Include{get;}   
+    }
+. Implement this interface
+    public class BaseSpecification<T> : ISpecification<T>
+    {
+        public BaseSpecification(Expression<Func<T, bool>> criteria)
+        {
+            Criteria = criteria;
+        }
+
+        public Expression<Func<T, bool>> Criteria { get; }
+
+        public List<Expression<Func<T, object>>> Includes { get; } = 
+               new List<Expression<Func<T, object>>>();
+
+        protected void AddInclude(Expression<Func<T, object>> includeExpression)
+        {
+            Includes.Add(includeExpression);
+        }
+    }
+
+. Make specification
+    public class SpecificationEvaluator<TEntity> where TEntity : BaseEntity
+    {
+        public static IQueryable<TEntity> GetQuery(IQueryable<TEntity> inputQuery , ISpecification<TEntity> spec)
+        {
+            var query = inputQuery;
+            if(spec.Criteria != null)
+            {
+                query = query.Where(spec.Criteria);
+            }
+            query = spec.Includes.Aggregate(query, (current , include) => current.Include(include)); ;
+
+            return query;
+        }
+    }
+
+. DTO ( Data Transfer Object it's used for transfer data between layers ) 
+- For view data for the client with a good shap
+
+. AutoMapper Add 
+  - install auto mapeer extension.dependency injection
+- Create3 new class 
+   public class MappingProfile : Profile
+    {
+        public MappingProfile()
+        {
+            CreateMap<Products, ProductToReturnDto>();
+        }
+    }
+
+  - Add automapper in program.cs
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+ - Inject AutoMapper to the controller 
+Using auto mapper 
+            return Ok(_mapper.Map<Products, ProductToReturnDto>(product));
+ - For mapping an object you need to custom it on mapping profile
+      public MappingProfile()
+        {
+            CreateMap<Products, ProductToReturnDto>()
+                .ForMember(d => d.ProductBrand, o => o.MapFrom(s => s.ProductBrand.Name))
+                .ForMember(d => d.ProductType, o => o.MapFrom(s => s.ProductType.Name));
+        }
+ 
+----------------------------------------------------------------------
+
+# Section 5 API Error Handling
+ . 200 ok   300 range redirection  400 range error handling  500 range error handling 
+ - Create Class ApiResponse
+   public class ApiResponse
+    {
+        public int StatusCode { get; set; }
+        public string Message { get; set; }
+    }
+
+. Improve swagger document in the product controller 
+will provide two response type in swagger
+
+        [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<ProductToReturnDto>> GetProduct(int id)
+        {
+            var spec = new ProductsWithTypesAndBrandsSpecification(id);
+
+            var product = (await _productRepo.GetEntityWithSpec(spec));
+
+           if(product == null) return NotFound(new ApiResponse(404));
+
+            return Ok(_mapper.Map<Products, ProductToReturnDto>(product));
+        }
+
+-------------------------------------------------------
+
+
+Section 5 ( Pagination - filter - Sorting - Searching ) 
+. Pagination : 
+-   will be like query string : /api/products?pageNumber=2&pageSize=5
+-   page size should be limited 
+-   We should always oage results
+
+
+
+----------------------------------------------------------------
+
+Section 7 Front end 
+To install certificate in your computer to make the client like https 
+. mkcert -install
+to  install certificated 
+1 - open the path and press Alt , Shift , F , A
+and then run as adminstration
+2 - mkcert -install
+3 - mkcert localhost
+important Link : https://technixleo.com/create-locally-trusted-ssl-certificates-with-mkcert-on-windows/
+
+add these lines to ts config
+
+      "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options":{
+            "sslCert":"ssl/localhost.pem",
+            "sslKey":"ssl/localhost-key.pem",
+            "ssl":true
+          },
+
+. To add boostrap 
+1 - in the client folder of your project write this command 
+ ng add ngx-bootstrap
+https://valor-software.com/ngx-bootstrap/#/documentation
+
+For unistall angular CLi
+
+**npm uninstall -g @angular/cli
+**npm cache clean --force
+**npm install -g @angular/cli@1.4.1
+**npx -p @angular/cli@15.0.2 ng new Client
+
+
+-------------------------------------------------------------
+
+Section 8 Angular basics
+. To Generate Component you should run 
+ - ng g c nav-bar --dry-run
+. To skip test file
+ - ng g c nav-bar --skip-tests
+
+. Angular life cycle hooks
+ - oninit
+ -
+  ngOnInit(): void {
+     this.http.get('https://localhost:5001/api/products').subscribe({
+       next: (response:any)=> this.products = response.data, //what to do next
+       error: (error:any) => console.log(error), // what to do when ther is an error
+       complete:()=>{
+         console.log('requested Completed');
+       }
+     });
+  }
+
+Structure Directive 
+ <li class="list-unstyled" *ngfor="let product of products">
+       {{product.name}}
+    </li>
