@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { response } from '../../node_modules/@types/express';
-import { IProduct } from './Models/products';
-import { Pagination } from './Models/pagination';
+import { IProduct } from './shared/Models/products';
+import { Pagination } from './shared/Models/pagination';
 
 @Component({
   selector: 'app-root',
