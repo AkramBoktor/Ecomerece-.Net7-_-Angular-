@@ -266,3 +266,12 @@ Structure Directive
 Observable : A sequence of items that arrive asynchronously over time
 - important link json2ts https://json2ts.vercel.app/
 
+-------------------------------------------------------------------
+Section 9
+. To create new module
+  - ng g m core 
+. For skip testing file
+  - ng g c shop/shop --flat --skip-tests --dry-run
+. For create a service 
+  - ng g s shop/shop --skip-tests
+
