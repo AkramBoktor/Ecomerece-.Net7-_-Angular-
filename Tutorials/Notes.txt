@@ -275,3 +275,12 @@ Section 9
 . For create a service 
   - ng g s shop/shop --skip-tests
 
+-----------------------------------------------------------------
+Section 10
+ . To send data from the parent to child i will use @Input in the child
+ - in the child will make @Input() product: IProduct;
+ - In parent use                         <app-product-item [product]="product"></app-product-item>
+
+ . Angular Pipe we can use 
+ - Currency
+
