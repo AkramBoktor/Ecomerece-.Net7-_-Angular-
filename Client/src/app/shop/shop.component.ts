@@ -13,7 +13,9 @@ export class ShopComponent implements OnInit{
   products:IProduct[] =[];
   brands:Brand[]=[] ;
   types:Type[]=[] ;
-  
+  brandIdSelected = 0 ;
+  typeIdSelected = 0 ;
+
   constructor(private ShopService: ShopService) {}
   ngOnInit(): void {
     this.getProducts();
@@ -22,7 +24,7 @@ export class ShopComponent implements OnInit{
   }
 
   getProducts(){
-    this.ShopService.getProducts().subscribe({
+    this.ShopService.getProducts(this.brandIdSelected , this.typeIdSelected ).subscribe({
       next: response => this.products = response.data, //what to do next
       error: (error:any) => console.log(error), // what to do when ther is an error
       complete:()=>{ 
@@ -33,7 +35,7 @@ export class ShopComponent implements OnInit{
 
   getBrands(){
     this.ShopService.getBrands().subscribe({
-      next: response => this.brands = response, //what to do next
+      next: response => this.brands = [{id:0 , name:'All'}, ...response], //what to do next id =0 for nonselect any item and get all
       error: (error:any) => console.log(error), // what to do when ther is an error
       complete:()=>{ 
         console.log('requested Completed');
@@ -43,11 +45,21 @@ export class ShopComponent implements OnInit{
 
   getTypes(){
     this.ShopService.getTypes().subscribe({
-      next: response => this.types = response, //what to do next
+      next: response => this.types = [{id:0 , name:'All'}, ...response], //what to do next id =0 for nonselect any item and get all
       error: (error:any) => console.log(error), // what to do when ther is an error
       complete:()=>{ 
         console.log('requested Completed');
       }
     });
+  }
+
+  onBrandSelected(brandId:number){
+    this.brandIdSelected = brandId;
+    this.getProducts();
+  }
+
+  onTypeSelected(typeId:number){
+    this.brandIdSelected = typeId;
+    this.getProducts();
   }
 }
