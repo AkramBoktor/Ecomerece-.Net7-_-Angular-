@@ -3,6 +3,7 @@ import { IProduct } from '../shared/Models/products';
 import { ShopService } from './shop.service';
 import { Brand } from '../shared/Models/brand';
 import { Type } from '../shared/Models/type';
+import { ShopParams } from '../shared/Models/shopParams';
 
 @Component({
   selector: 'app-shop',
@@ -13,14 +14,13 @@ export class ShopComponent implements OnInit{
   products:IProduct[] =[];
   brands:Brand[]=[] ;
   types:Type[]=[] ;
-  brandIdSelected = 0 ;
-  typeIdSelected = 0 ;
-  sortSelected = 'name';
+  shopParams = new ShopParams();
   sortOptions = [
     {name : 'Alphabetical' , value: 'name'},
     {name : 'Price: Low to high' , value: 'priceAsc'},
     {name : 'Price: High to low' , value: 'priceDesc'},
   ]
+ totalCount = 0 ;
 
   constructor(private ShopService: ShopService) {}
   ngOnInit(): void {
@@ -30,8 +30,13 @@ export class ShopComponent implements OnInit{
   }
 
   getProducts(){
-    this.ShopService.getProducts(this.brandIdSelected , this.typeIdSelected , this.sortSelected).subscribe({
-      next: response => this.products = response.data, //what to do next
+    this.ShopService.getProducts(this.shopParams).subscribe({
+      next: response => {
+            this.products = response.data;
+            this.shopParams.pageSize = response.pageSize;  
+            this.shopParams.pageNumber = response.pageIndex;  
+            this.totalCount = response.count
+      }, //what to do next
       error: (error:any) => console.log(error), // what to do when ther is an error
       complete:()=>{ 
         console.log('requested Completed');
@@ -60,18 +65,18 @@ export class ShopComponent implements OnInit{
   }
 
   onBrandSelected(brandId:number){
-    this.brandIdSelected = brandId;
+    this.shopParams.brandId = brandId;
     this.getProducts();
   }
 
   onTypeSelected(typeId:number){
-    this.typeIdSelected = typeId;
+    this.shopParams.typeId = typeId;
     this.getProducts();
   }
 
   
   onSortSelected(event:any){
-    this.sortSelected = event.target.value;
+    this.shopParams.sort = event.target.value;
     this.getProducts();
   }
 }
