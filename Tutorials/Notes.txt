@@ -277,10 +277,37 @@ Section 9
 
 -----------------------------------------------------------------
 Section 10
- . To send data from the parent to child i will use @Input in the child
+ . To send data from the parent to child i will use @Input in the child using from parent to child
  - in the child will make @Input() product: IProduct;
  - In parent use                         <app-product-item [product]="product"></app-product-item>
 
  . Angular Pipe we can use 
  - Currency
 
+ . Using Output using from child to parent 
+**in child 
+ @Input() totalCount?:number
+  @Input() pageSize?:number
+  @Output() pageChanged = new EventEmitter();
+
+  onPageChanged(event:any){
+    this.pageChanged.emit(event.page);
+  }
+
+**in parent
+  <app-pager
+                 [totalCount]="totalCount"
+                 [pageSize] = "shopParams.pageSize"
+                 (pageChanged) = "onPageChange($event)"
+                 >
+
+                 </app-pager>
+
+** parent.ts
+  onPageChange(event:any){
+    if(this.shopParams.pageNumber !== event)
+    {
+      this.shopParams.pageNumber = event;
+    }
+    this.getProducts();
+  }
