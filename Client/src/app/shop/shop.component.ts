@@ -59,7 +59,7 @@ export class ShopComponent implements OnInit{
   }
 
   onTypeSelected(typeId:number){
-    this.brandIdSelected = typeId;
+    this.typeIdSelected = typeId;
     this.getProducts();
   }
 }
