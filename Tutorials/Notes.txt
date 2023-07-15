@@ -347,3 +347,17 @@ And should add RouterModule in the module of the using
     CommonModule,
     RouterModule
   ],
+
+- send parameter id in url & read it
+  constructor(private shopService:ShopService , private route: ActivatedRoute)
+  loadProduct(){
+*** let id =  this.route.snapshot.paramMap.get('id');
+if(id!=null) this.shopService.getProductDetails(+id).subscribe({
+  next: response => this.product = response, //what to do next
+error: (error:any) => console.log(error), // what to do when ther is an error
+complete:()=>{ 
+console.log('requested Completed');
+}
+})
+}
+

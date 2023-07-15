@@ -11,9 +11,13 @@
 }
 
 a {
-    text-decoration-style: none;
+    text-decoration: none;
     color: gray;
-    .active{
-        color:"orange";
+    cursor: pointer;
+    &.active{
+        color:orange;
     }
+}
+.logo{
+    cursor: pointer;
 }
