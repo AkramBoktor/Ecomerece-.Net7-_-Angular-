@@ -363,10 +363,16 @@ console.log('requested Completed');
 
 - lazyloading
 * in the child router module
-const routes:Route =[
+const routes:any =[
   { path:'', component:ShopComponent},
   { path:':id', component:ProductDetailsComponent},
 ]
+
+@NgModule({
+  declarations: [],
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
 
 * in the parent module
 const routes: Routes = [
