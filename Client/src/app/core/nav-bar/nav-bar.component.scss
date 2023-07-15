@@ -9,3 +9,11 @@
     top: -12px;
     right: 32px;
 }
+
+a {
+    text-decoration-style: none;
+    color: gray;
+    .active{
+        color:"orange";
+    }
+}

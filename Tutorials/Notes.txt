@@ -284,6 +284,8 @@ Section 10
  . Angular Pipe we can use 
  - Currency
 
+
+
  . Using Output using from child to parent 
 **in child 
  @Input() totalCount?:number
@@ -322,3 +324,26 @@ const routes: Routes = [
   { path:'/shop:id', component:ProductDetailsComponent},
   { path:'**', redirectTo:'', pathMatch:'full'},
 ];
+
+
+- to add router link when click link make it as router
+  <a class="p-2" routerLine='/'  
+        routerLinkActive="active"
+        routerLinkeActiveOptions = "{exact:true}"
+        >Home
+      </a>
+        <a class="p-2" routerLink='/shop'  
+        routerLinkActive="active"
+        >
+        Shop
+      </a>
+        <a class="p-2" routerLine='/contact'
+         routerLinkActive="active">
+         Contact
+        </a>
+
+And should add RouterModule in the module of the using 
+ imports: [
+    CommonModule,
+    RouterModule
+  ],
