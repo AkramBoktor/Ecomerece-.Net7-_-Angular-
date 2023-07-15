@@ -311,3 +311,14 @@ Section 10
     }
     this.getProducts();
   }
+
+-------------------------------------------------------------
+Section 10 Routing
+ - in app-routing.module
+ .* add 
+const routes: Routes = [
+  { path:'', component:HomeComponent},
+  { path:'/shop', component:ShopComponent},
+  { path:'/shop:id', component:ProductDetailsComponent},
+  { path:'**', redirectTo:'', pathMatch:'full'},
+];
