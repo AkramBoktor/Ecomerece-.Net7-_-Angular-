@@ -284,6 +284,8 @@ Section 10
  . Angular Pipe we can use 
  - Currency
 
+
+
  . Using Output using from child to parent 
 **in child 
  @Input() totalCount?:number
@@ -311,3 +313,71 @@ Section 10
     }
     this.getProducts();
   }
+
+-------------------------------------------------------------
+Section 10 Routing
+ - in app-routing.module
+ .* add 
+const routes: Routes = [
+  { path:'', component:HomeComponent},
+  { path:'/shop', component:ShopComponent},
+  { path:'/shop:id', component:ProductDetailsComponent},
+  { path:'**', redirectTo:'', pathMatch:'full'},
+];
+
+
+- to add router link when click link make it as router
+  <a class="p-2" routerLine='/'  
+        routerLinkActive="active"
+        routerLinkeActiveOptions = "{exact:true}"
+        >Home
+      </a>
+        <a class="p-2" routerLink='/shop'  
+        routerLinkActive="active"
+        >
+        Shop
+      </a>
+        <a class="p-2" routerLine='/contact'
+         routerLinkActive="active">
+         Contact
+        </a>
+
+And should add RouterModule in the module of the using 
+ imports: [
+    CommonModule,
+    RouterModule
+  ],
+
+- send parameter id in url & read it
+  constructor(private shopService:ShopService , private route: ActivatedRoute)
+  loadProduct(){
+*** let id =  this.route.snapshot.paramMap.get('id');
+if(id!=null) this.shopService.getProductDetails(+id).subscribe({
+  next: response => this.product = response, //what to do next
+error: (error:any) => console.log(error), // what to do when ther is an error
+complete:()=>{ 
+console.log('requested Completed');
+}
+})
+}
+
+- lazyloading
+* in the child router module
+const routes:any =[
+  { path:'', component:ShopComponent},
+  { path:':id', component:ProductDetailsComponent},
+]
+
+@NgModule({
+  declarations: [],
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+
+* in the parent module
+const routes: Routes = [
+  { path:'', component:HomeComponent},
+  { path:'shop', loadChildren:()=>import('./shop/shop.module').then(m=>m.ShopModule)},
+  { path:'**', redirectTo:'', pathMatch:'full'},
+];
+
