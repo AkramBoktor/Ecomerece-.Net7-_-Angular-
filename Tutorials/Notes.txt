@@ -381,3 +381,40 @@ const routes: Routes = [
   { path:'**', redirectTo:'', pathMatch:'full'},
 ];
 
+---------------------------------------------------------------------------------
+Section 11 Client-Error Handling 
+
+- Error handling 
+- Http interceptor : allow us catch error just come back from the server
+- adding toast notification
+- troubleshooting tips
+
+- create interceptor component
+ . ng g interceptor --skip-tests
+
+- in app.module.ts or core.module.ts
+ . add interceptor in provideers
+  providers: [
+    {provide:HTTP_INTERCEPTORS,useClass:ErrorInterceptor,multi:true}
+  ],
+
+- add toast notification 
+https://github.com/scttcper/ngx-toastr
+https://www.npmjs.com/package/ngx-toastr/v/15.0.0
+https://www.npmjs.com/search?q=ngx-toastr
+In angular make this command : npm i ngx-toastr@15.0.0
+
+. in core.module.ts
+- import { ToastrModule } from 'ngx-toastr';
+-  ToastrModule.forRoot({
+      timeOut: 10000,
+      positionClass: 'toast-top-right',
+      preventDuplicates: true,
+    }),
+
+- to solve this error in configuration 
+** Property 'get' in type 'ToastInjector' is not assignable to the same property in base type 'Injector
+- in tsconfog.json
+- in angularCompilerOptions
+- Make -> skipLibCheck : true
+. 
