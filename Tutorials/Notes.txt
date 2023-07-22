@@ -444,3 +444,17 @@ export class AppModule { }
               "node_modules/ngx-toastr/toastr.css",
               "src/styles.scss"
             ],
+
+
+- Add Spinner ( https://www.npmjs.com/package/ngx-spinner )
+1- npm install ngx-spinner --save
+2 - Demo (https://napster2210.github.io/ngx-spinner/)
+3 - Make service 
+4 - add interceptor in it
+  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    this.buseyService.start();
+    return next.handle(request).pipe(
+      delay(1000),
+      finalize(()=> this.buseyService.end())
+    );
+  }
