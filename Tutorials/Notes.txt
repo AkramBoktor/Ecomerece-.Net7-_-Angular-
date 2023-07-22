@@ -433,4 +433,14 @@ import {BreadcrumbModule} from 'xng-breadcrumb';
 export class AppModule { }
 
 3 - add this 
-                     <xng-breadcrumb></xng-breadcrumb>
+    <xng-breadcrumb></xng-breadcrumb>
+
+- for change the bootstrap theme , you can use bootwatch
+1- npm i bootswatch
+2 - add bootswatch in angular.json
+  "styles": [
+              "node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
+              "node_modules/bootswatch/dist/superhero/bootstrap.min.css",
+              "node_modules/ngx-toastr/toastr.css",
+              "src/styles.scss"
+            ],
