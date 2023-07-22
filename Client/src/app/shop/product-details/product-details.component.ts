@@ -14,7 +14,8 @@ export class ProductDetailsComponent  implements OnInit{
   
   constructor(private shopService:ShopService , private route: ActivatedRoute,
               private breadcrumbService: BreadcrumbService){
-
+                // make it's empty to prevent show id before the name
+       this.breadcrumbService.set('@ProductDetails', ' ');  
   }
   ngOnInit(): void {
     this.loadProduct();
