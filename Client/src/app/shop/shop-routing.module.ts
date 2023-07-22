@@ -5,7 +5,13 @@ import { Route, RouterModule } from '@angular/router';
 
 const routes:any =[
   { path:'', component:ShopComponent},
-  { path:':id', component:ProductDetailsComponent},
+  /* add alias for getting the title of product*/
+  { path:':id', component:ProductDetailsComponent ,data: {
+            breadcrumb: {
+                        alias: 'ProductDetails'
+                        }
+          }
+  }
 ]
 
 @NgModule({
