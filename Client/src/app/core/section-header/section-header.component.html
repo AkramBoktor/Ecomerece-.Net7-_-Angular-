@@ -5,13 +5,12 @@
                  <div class="col-12">
                      <h1>title goes here</h1>
 
-                 <nav>
-                    <ol class="breadcrumb">
-                      <li class="breadcrumb-item"><a href="#">Home</a></li>
-                      <li class="breadcrumb-item active" aria-current="page">Library</li>
-                    </ol>
-                  </nav>
-                  
+                     <xng-breadcrumb>
+                         <ng-container *ngxBreadcrumbItem="let breadcrumb">
+                                  {{breadcrumb | titlecase}}
+                         </ng-container>
+                     </xng-breadcrumb>
+
                 </div>
         </div>
     </div>

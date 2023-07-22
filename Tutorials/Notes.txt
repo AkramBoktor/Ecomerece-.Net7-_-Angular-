@@ -418,3 +418,19 @@ In angular make this command : npm i ngx-toastr@15.0.0
 - in angularCompilerOptions
 - Make -> skipLibCheck : true
 . 
+----------------------------------------------------------------------------------
+ . Section 12 Client : Pazzazz
+- add breadcrumb website: https://udayvunnam.github.io/xng-breadcrumb/#/quickstart
+1- npm install --save xng-breadcrumb@9.0.0
+2- in app.moduel
+import {BreadcrumbModule} from 'xng-breadcrumb';
+
+@NgModule({
+  ...
+  imports: [BreadcrumbModule],
+  ...
+})
+export class AppModule { }
+
+3 - add this 
+                     <xng-breadcrumb></xng-breadcrumb>
