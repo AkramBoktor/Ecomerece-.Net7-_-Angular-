@@ -13,9 +13,9 @@ namespace Infrastructure.Repository
         {
                 _database = redis.GetDatabase();
         }
-        public Task<bool> DeleteBasketAsync(string basketId)
+        public async Task<bool> DeleteBasketAsync(string basketId)
         {
-            throw new NotImplementedException();
+            return await _database.KeyDeleteAsync(basketId);
         }
 
         public async Task<CustomerBasket> GetBasketAsync(string basketId)
@@ -25,9 +25,13 @@ namespace Infrastructure.Repository
             return basketData.IsNullOrEmpty ? null : JsonSerializer.Deserialize<CustomerBasket>(basketData);
         }
 
-        public Task<CustomerBasket> UpdateBasketAsync(CustomerBasket basket)
+        public async Task<CustomerBasket> UpdateBasketAsync(CustomerBasket basket)
         {
-            throw new NotImplementedException();
+           var updateBasket =   await _database.StringSetAsync(basket.Id, 
+                JsonSerializer.Serialize(basket), TimeSpan.FromDays(30));
+
+            return (!updateBasket) ? null : await GetBasketAsync(basket.Id);
+
         }
     }
 }
