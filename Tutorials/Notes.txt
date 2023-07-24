@@ -458,3 +458,17 @@ export class AppModule { }
       finalize(()=> this.buseyService.end())
     );
   }
+-----------------------------------------------------------------------------------
+Section 13 Basket using redis in memory database
+1 - Nuget Gallery -> then install redis in infrastructure (StackExchange.Redis)
+2 - Add Redis in startup 
+// Add redis in start up
+            services.AddSingleton<IConnectionMultiplexer>(c => {
+                var options = ConfigurationOptions.Parse(config.GetConnectionString("Redis"));
+                return ConnectionMultiplexer.Connect(options);
+            });
+3 - in appsetting add string connection of redis 
+ "ConnectionStrings": {
+    "DefaultConnection": "Data Source = Ecommerce.db",
+    "Redis": "localhost"
+  },
