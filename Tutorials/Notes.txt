@@ -477,3 +477,24 @@ Section 13 Basket using redis in memory database
 1 - install docker windows https://www.docker.com/
 2 - add compaser file in the solutions 
 3 - docker-compose up --detach runing docker --detach meaning in background
+
+------------------------------------------------------------------------------------------------------
+
+Section 14 client_basket
+. how get unique string 
+1- install cuid ( npm i cuid )
+2- going to architect in angular.json under options add
+"architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "allowedCommonJsDependencies": [
+              "cuid"
+            ],
+3-       id=cuid() from import * as cuid from 'cuid';
+  export class Basket implements IBasket {
+      // Generate unique id for every basket 
+      id=cuid();
+      items:IBasketItem[] = [];
+  }
+
