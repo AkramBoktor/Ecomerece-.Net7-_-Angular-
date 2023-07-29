@@ -481,3 +481,20 @@ Section 13 Basket using redis in memory database
 ------------------------------------------------------------------------------------------------------
 
 Section 14 client_basket
+. how get unique string 
+1- install cuid ( npm i cuid )
+2- going to architect in angular.json under options add
+"architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "allowedCommonJsDependencies": [
+              "cuid"
+            ],
+3-       id=cuid() from import * as cuid from 'cuid';
+  export class Basket implements IBasket {
+      // Generate unique id for every basket 
+      id=cuid();
+      items:IBasketItem[] = [];
+  }
+
