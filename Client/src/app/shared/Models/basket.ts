@@ -20,3 +20,8 @@ export interface IBasket {
       id=cuid();
       items:IBasketItem[] = [];
   }
+  export interface BasketTotals{
+    shipping: number;
+    subTotal: number
+    total: number;
+  }
