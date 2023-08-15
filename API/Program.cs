@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 //Extension Class Add service
 builder.Services.AddApplicationservices(builder.Configuration);
+builder.Services.AddIdentityServices(builder.Configuration);
 
 var app = builder.Build();
 

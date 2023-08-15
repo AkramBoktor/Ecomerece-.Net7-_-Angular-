@@ -499,3 +499,45 @@ Section 14 client_basket
   }
 
 
+-------------------------------------------------------------------------------------------------------
+Section 15 Identity
+1-setting up dentity package
+ - install entity framework in core project (microsoft.aspnetcore.identity.entityframeworkcore)
+ - install microsoft aspnetcore identity in infrastructure project 
+ - install microsoft.identitymodel.token for jwt token in infrastructure
+ - install microsoft.identitymodel.token.jwt in infrastructure 
+ - install Microsoft.AspNetCore.Authentication.JwtBearer in API Project ( Microsoft.AspNetCore.Authentication.JwtBearer)
+2 - Make class appuser in core project 
+    public class AppUser : IdentityUser
+    {
+        public string DisplayName { get; set; }
+
+        public Address Address { get; set; }
+    }
+   public class Address
+    {
+        public int Id { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Street { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string ZipCode { get; set; }
+
+        //one to one relationship 
+        [Required]
+        public int AppUserId { get; set; }
+        public AppUser AppUser { get; set; }
+    }
+3  - Add IdentityDbContext in core project
+  public class AppIdentityDbContext : IdentityDbContext
+    {
+        public AppIdentityDbContext(DbContextOptions<IdentityDbContext> options):base(options)
+        {
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+        }
+    }
