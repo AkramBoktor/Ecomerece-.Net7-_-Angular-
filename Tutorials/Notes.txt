@@ -541,3 +541,6 @@ Section 15 Identity
             base.OnModelCreating(modelBuilder);
         }
     }
+4 - Add Migerations in your solutions 
+PM> add-migration IdentityInitial -p Infrastructure -s API -c AppIdentityDbContext -o Identity/Migrations
+https://learn.microsoft.com/en-us/ef/core/modeling/relationships/one-to-one

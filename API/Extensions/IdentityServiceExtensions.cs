@@ -1,5 +1,4 @@
-﻿using Core.Data;
-using Core.Identity;
+﻿using Infrastructure.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Extensions

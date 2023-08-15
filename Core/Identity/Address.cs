@@ -14,7 +14,7 @@ namespace Core.Identity
 
         //one to one relationship 
         [Required]
-        public int AppUserId { get; set; }
+        public string AppUserId { get; set; }
         public AppUser AppUser { get; set; }
     }
 }
