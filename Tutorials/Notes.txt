@@ -529,4 +529,15 @@ Section 15 Identity
         public int AppUserId { get; set; }
         public AppUser AppUser { get; set; }
     }
-3  - 
+3  - Add IdentityDbContext in core project
+  public class AppIdentityDbContext : IdentityDbContext
+    {
+        public AppIdentityDbContext(DbContextOptions<IdentityDbContext> options):base(options)
+        {
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+        }
+    }

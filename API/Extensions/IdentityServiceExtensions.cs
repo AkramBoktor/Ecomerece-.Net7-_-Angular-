@@ -1,0 +1,19 @@
+﻿using Core.Data;
+using Core.Identity;
+using Microsoft.EntityFrameworkCore;
+
+namespace API.Extensions
+{
+    public static class IdentityServiceExtensions
+    {
+        public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration config)
+        {
+            services.AddDbContext<AppIdentityDbContext>(options =>
+            {
+                options.UseSqlite(config.GetConnectionString("IdentityConnection"));
+            });
+
+            return services;
+        }
+    }
+}
