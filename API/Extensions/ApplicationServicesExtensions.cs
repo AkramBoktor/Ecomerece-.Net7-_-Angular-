@@ -1,5 +1,6 @@
 using API.Errors;
 using Core.Data;
+using Core.Identity;
 using Core.Interfaces;
 using Infrastructure.Repository;
 using Microsoft.AspNetCore.Mvc;
@@ -22,8 +23,9 @@ namespace API.Extensions
                 {
                     options.UseSqlite(config.GetConnectionString("DefaultConnection"));
                 });
-               // Add redis in start up
-                services.AddSingleton<IConnectionMultiplexer>(c => {
+          
+            // Add redis in start up
+            services.AddSingleton<IConnectionMultiplexer>(c => {
                     var options = ConfigurationOptions.Parse(config.GetConnectionString("Redis"));
                     return ConnectionMultiplexer.Connect(options);
                 });

@@ -3,6 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Infrastructure.Data;
 using API.Middleware;
 using API.Extensions;
+using Infrastructure.Identity;
+using Microsoft.AspNetCore.Identity;
+using Core.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +35,8 @@ app.UseStaticFiles();
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
+
 app.UseAuthorization();
 
 app.MapControllers();
@@ -40,12 +45,16 @@ app.MapControllers();
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
 var context = services.GetRequiredService<StoreContext>();
+var identityContext = services.GetRequiredService<AppIdentityDbContext>();
+var userManager = services.GetRequiredService<UserManager<AppUser>>();
 var logger = services.GetRequiredService<ILogger<Program>>();
 try
 {
 
     await context.Database.MigrateAsync();
+    await identityContext.Database.MigrateAsync();
     await StoreContextSeed.SeedAsync(context);
+    await AppIdentityDbContextSeed.SeedUsersAsync(userManager);
 }
 catch (Exception ex)
 {
