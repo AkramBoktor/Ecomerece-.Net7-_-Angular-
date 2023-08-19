@@ -31,8 +31,8 @@ namespace API.Extensions
                 opt.TokenValidationParameters = new TokenValidationParameters 
                 {
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Toke:Key"])),
-                    ValidIssuer = config["Token:Issuer"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Token:Key"])),
+                    ValidIssuer = config["Token:Isuuer"],
                     ValidateIssuer = true
                 });
             services.AddAuthorization();

@@ -35,7 +35,7 @@ namespace Infrastructure.Services
                 Subject = new ClaimsIdentity(claims),
                 Expires = DateTime.Now.AddDays(7),
                 SigningCredentials = credational,
-                Issuer = _configuration["Toke:Issuer"]
+                Issuer = _configuration["Token:Isuuer"]
             };
 
             // handler token
