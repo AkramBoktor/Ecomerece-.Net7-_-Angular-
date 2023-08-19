@@ -3,6 +3,7 @@ using Core.Data;
 using Core.Identity;
 using Core.Interfaces;
 using Infrastructure.Repository;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StackExchange.Redis;
@@ -31,7 +32,8 @@ namespace API.Extensions
                 });
                 services.AddScoped<IBasketRepository, BasketRepository>();
                 services.AddScoped<IProductRepository, ProductRepository>();
-                services.AddScoped(typeof(IGenericRepository<>),typeof(GenericRepository<>));
+                services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+                services.AddScoped<ITokenService, TokenService>();
                 services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
                 //Change the beahvior options of APi in controller 
                 services.Configure<ApiBehaviorOptions>(options => {
