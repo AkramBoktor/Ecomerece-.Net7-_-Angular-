@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Core.Identity;
 
 namespace Core.Interfaces
 {
-    internal class ITokenService
+    public interface ITokenService
     {
+        string CreateToken(AppUser user);
     }
 }
