@@ -12,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 //Extension Class Add service
 builder.Services.AddApplicationservices(builder.Configuration);
 builder.Services.AddIdentityServices(builder.Configuration);
+builder.Services.AddSwagerDocumentation();
 
 var app = builder.Build();
 
@@ -20,13 +21,7 @@ app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseStatusCodePagesWithReExecute("/errors/{0}");
 
-// Make swagger in development 
-// If you remove it it will be in production
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagerDocumentation();
 
 //Enable Cors
 app.UseCors("CorsPolicy");
