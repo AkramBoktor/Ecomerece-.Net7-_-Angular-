@@ -592,3 +592,8 @@ https://learn.microsoft.com/en-us/ef/core/modeling/relationships/one-to-one
                     ValidIssuer = config["Token:Issuer"],
                     ValidateIssuer = true
                 });
+
+
+--------------------------------------------------------------------
+Section 17 : Client-Identity
+
