@@ -5,10 +5,10 @@ export interface IUser {
   }
 
   export interface IAddress {
-      FirstName :string;
-      LastName: string;
-      Street :string;
-      City :string;
-      State:string
-      ZipCode: string
+      firstName :string;
+      lastName: string;
+      street :string;
+      city :string;
+      state:string
+      zipCode: string
   }
