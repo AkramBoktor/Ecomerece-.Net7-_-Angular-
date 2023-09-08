@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
-import { HttpClient } from '../../../node_modules/@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { IUser } from '../shared/Models/user';
 import { BehaviorSubject } from 'rxjs';
-import { Router } from '../../../node_modules/@angular/router';
+import { Router } from '@angular/router';
+import { map } from 'rxjs/operators'
 
 @Injectable({
   providedIn: 'root'
@@ -16,11 +17,12 @@ export class AccountService {
 
   constructor(private httpClient: HttpClient,private router:Router) { }
 
-  login(user:IUser){
+  login(user:any){
     return this.httpClient.post<IUser>(this.baseUrl+'account/login',user).pipe(
       map(user=>{
         localStorage.setItem('token',user.token);
         this.currentUserSource.next(user);
+        return user;
       })
     )
   }

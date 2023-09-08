@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { BasketService } from '../../basket/basket.service';
 import { IBasketItem } from '../../shared/Models/basket';
 import { SelectMultipleControlValueAccessor } from '../../../../node_modules/@angular/forms';
+import { AccountService } from '../../account/account.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -9,7 +10,7 @@ import { SelectMultipleControlValueAccessor } from '../../../../node_modules/@an
   styleUrls: ['./nav-bar.component.scss']
 })
 export class NavBarComponent {
-constructor(public basketService : BasketService){}
+constructor(public basketService : BasketService,public accountService: AccountService){}
 
 getCount(items: IBasketItem[]){
   
