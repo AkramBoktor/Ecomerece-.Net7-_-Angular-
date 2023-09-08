@@ -597,3 +597,19 @@ https://learn.microsoft.com/en-us/ef/core/modeling/relationships/one-to-one
 --------------------------------------------------------------------
 Section 17 : Client-Identity
 1 - Create account component (register - login)
+2 - Form to taking data from user
+ - two types 
+  . forms module ( template driven )
+      * easy to use
+      * good for simple scenarios
+      * two way binding 
+      * minimal component 
+      * automatic tracing by angular 
+      * testing is hard
+
+  . Reactive form module ( reactive )
+     * more flexiable
+     * good for any scenarios
+     * immutable data model
+     * testing is easier
+     * reactive transformation 
