@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent {
 
+  errors:string[]|null=null;
   //using formbuilder service from reactive form
 constructor(private formBuilder:FormBuilder,private accountService:AccountService , private router : Router){
 
@@ -24,7 +25,8 @@ registerForm = this.formBuilder.group({
 
 onSubmit(){
   this.accountService.login(this.registerForm.value).subscribe({
-    next: ()=>this.router.navigateByUrl('/shop')
+    next: ()=>this.router.navigateByUrl('/shop'),
+    error:errorSubmit => this.errors = errorSubmit.errors
   })
 }
 
