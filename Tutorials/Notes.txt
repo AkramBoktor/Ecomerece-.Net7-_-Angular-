@@ -613,3 +613,12 @@ Section 17 : Client-Identity
      * immutable data model
      * testing is easier
      * reactive transformation 
+
+* make async validator 
+validateEmailNotToken():AsyncValidatorFn{
+  return(control: AbstractControl) => {
+    return (this.accountService.checkEmailExists(control.value).pipe(
+      map(result => result ? {emailExists: true} : null )
+    ))
+  }
+}

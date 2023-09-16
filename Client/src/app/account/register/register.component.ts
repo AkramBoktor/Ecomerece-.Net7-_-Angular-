@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { AccountService } from 'src/app/account/account.service';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, AsyncValidatorFn, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { map, finalize } from 'rxjs/operators'
 
 @Component({
   selector: 'app-register',
@@ -19,7 +20,7 @@ constructor(private formBuilder:FormBuilder,private accountService:AccountServic
 
 registerForm = this.formBuilder.group({
   displayName:['',Validators.required],
-  email:['',[Validators.required,Validators.email]],
+  email:['',[Validators.required,Validators.email],[this.validateEmailNotToken()]],
   password:['',[Validators.required,Validators.pattern(this.complexPassword)]],
 })
 
@@ -28,6 +29,15 @@ onSubmit(){
     next: ()=>this.router.navigateByUrl('/shop'),
     error:errorSubmit => this.errors = errorSubmit.errors
   })
+}
+
+validateEmailNotToken():AsyncValidatorFn{
+  return(control: AbstractControl) => {
+    return (this.accountService.checkEmailExists(control.value).pipe(
+      map(result => result ? {emailExists: true} : null ),
+      finalize(()=> control.markAllAsTouched())
+    ))
+  }
 }
 
 }

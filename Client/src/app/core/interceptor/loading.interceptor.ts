@@ -17,7 +17,7 @@ export class LoadingInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     this.buseyService.start();
     return next.handle(request).pipe(
-      delay(1000),
+      delay(200),
       finalize(()=> this.buseyService.end())
     );
   }
