@@ -615,10 +615,11 @@ Section 17 : Client-Identity
      * reactive transformation 
 
 * make async validator 
+
 validateEmailNotToken():AsyncValidatorFn{
   return(control: AbstractControl) => {
     return (this.accountService.checkEmailExists(control.value).pipe(
-      map(result => result ? {emailExists: true} : null )
+      map(result => result ? {emailExists: true} : null ),
+      finalize(()=> control.markAllAsTouched())
     ))
   }
-}
