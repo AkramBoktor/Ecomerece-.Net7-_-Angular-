@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { AccountService } from 'src/app/account/account.service';
 import { FormBuilder, Validators, AsyncValidatorFn, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { map, finalize } from 'rxjs/operators'
+import { map, finalize, take, switchMap, debounceTime } from 'rxjs/operators'
 
 @Component({
   selector: 'app-register',
@@ -33,11 +33,18 @@ onSubmit(){
 
 validateEmailNotToken():AsyncValidatorFn{
   return(control: AbstractControl) => {
-    return (this.accountService.checkEmailExists(control.value).pipe(
-      map(result => result ? {emailExists: true} : null ),
-      finalize(()=> control.markAllAsTouched())
-    ))
+    //  to make reload call to server side only one when type an email on text
+    // prevent call server many times 
+    return control.valueChanges.pipe(
+      debounceTime(1000),
+      take(1),
+      switchMap(()=>{
+        return (this.accountService.checkEmailExists(control.value).pipe(
+          map(result => result ? {emailExists: true} : null ),
+          finalize(()=> control.markAllAsTouched())
+        ))
+      })
+    )
   }
-}
-
+  }
 }
